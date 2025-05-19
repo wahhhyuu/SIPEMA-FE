@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIPEMA - Admin Panel</title>
+    <style>
+      /* Reset CSS */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+      }
+
+      /* Header Styles */
+      .header {
+        background-color: #1a3b6d;
+        color: white;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .user-icon {
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .user-icon svg {
+        color: #777;
+      }
+
+      .document-icon {
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
+      }
+
+      /* Navigation Styles */
+      .nav {
+        display: flex;
+        gap: 10px;
+        margin: 20px;
+      }
+
+      .nav-item {
+        padding: 15px 25px;
+        background-color: white;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 1px solid #ddd;
+        text-decoration: none;
+        color: #333;
+      }
+
+      .nav-item.active {
+        background-color: #1a3b6d;
+        color: white;
+      }
+
+      /* Content Styles */
+      .content {
+        margin: 20px;
+      }
+
+      .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .content-title {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .content-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .search-box {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-input {
+        padding: 10px;
+        padding-right: 35px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        width: 250px;
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 10px;
+        color: #777;
+        pointer-events: none;
+      }
+
+      .add-btn {
+        background-color: #1a3b6d;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      /* Table Styles */
+      .table-container {
+        background-color: white;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        background-color: #f8f9fa;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        font-weight: bold;
+      }
+
+      .action-icons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .action-icon {
+        cursor: pointer;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: white;
+        border-radius: 5px;
+        width: 500px;
+        padding: 20px;
+      }
+
+      .modal-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+      }
+
+      .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .btn-secondary {
+        background-color: #e9ecef;
+      }
+
+      .btn-primary {
+        background-color: #1a3b6d;
+        color: white;
+      }
+
+      /* Alert Modal */
+      .alert-modal {
+        text-align: center;
+      }
+
+      .alert-icon {
+        width: 70px;
+        height: 70px;
+        background-color: #ff9800;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: white;
+        font-size: 48px;
+      }
+
+      .alert-message {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+
+      .alert-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .btn-danger {
+        background-color: #dc3545;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <h1>SIPEMA - Admin Panel</h1>
+      <div class="user-profile">
+        <div class="user-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#1a3b6d"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <span>Admin</span>
+        <div class="document-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#1a3b6d"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+            ></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav">
+      <a href="user.html" class="nav-item">Users</a>
+      <a href="matakuliah.html" class="nav-item">Mata Kuliah</a>
+      <a href="kelas.html" class="nav-item">Kelas</a>
+      <a href="mahasiswa.html" class="nav-item active">Mahasiswa</a>
+      <a href="dosen.html" class="nav-item">Dosen</a>
+      <a href="nilai.html" class="nav-item">Nilai</a>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="content-header">
+        <h2 class="content-title">Mahasiswa</h2>
+        <div class="content-actions">
+          <div class="search-box">
+            <input
+              type="text"
+              class="search-input"
+              id="searchInput"
+              placeholder="Cari..."
+            />
+            <div class="search-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+          </div>
+          <button class="add-btn" id="addMahasiswaBtn">+ Add New</button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>NIM</th>
+              <th>NAMA MAHASISWA</th>
+              <th>TAHUN MASUK</th>
+              <th>KELAS</th>
+              <th>PROGRAM STUDI</th>
+              <th>AKSI</th>
+            </tr>
+          </thead>
+          <tbody id="mahasiswaTableBody">
+            <!-- Mahasiswa data will be populated here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Add/Edit Mahasiswa Modal -->
+    <div class="modal" id="mahasiswaModal">
+      <div class="modal-content">
+        <h3 class="modal-title" id="modalTitle">Tambah Mahasiswa</h3>
+        <form id="mahasiswaForm">
+          <input type="hidden" id="mahasiswaId" />
+          <div class="form-group">
+            <label for="nim">NIM</label>
+            <input type="text" class="form-control" id="nim" required />
+          </div>
+          <div class="form-group">
+            <label for="namaMahasiswa">Nama Mahasiswa</label>
+            <input
+              type="text"
+              class="form-control"
+              id="namaMahasiswa"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="tahunMasuk">Tahun Masuk</label>
+            <input type="text" class="form-control" id="tahunMasuk" required />
+          </div>
+          <div class="form-group">
+            <label for="kelas">Kelas</label>
+            <input type="text" class="form-control" id="kelas" required />
+          </div>
+          <div class="form-group">
+            <label for="programStudi">Program Studi</label>
+            <input
+              type="text"
+              class="form-control"
+              id="programStudi"
+              required
+            />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">
+              Kembali
+            </button>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="deleteModal">
+      <div class="modal-content alert-modal">
+        <div class="alert-icon">⚠️</div>
+        <div class="alert-message">
+          Anda yakin ingin menghapus data mahasiswa "<span
+            id="deleteMahasiswaName"
+          ></span
+          >"?
+        </div>
+        <div class="alert-buttons">
+          <button class="btn btn-secondary" id="cancelDeleteBtn">
+            Kembali
+          </button>
+          <button class="btn btn-danger" id="confirmDeleteBtn">
+            Ya, Hapus!
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Variables
+        const mahasiswaTableBody =
+          document.getElementById("mahasiswaTableBody");
+        const mahasiswaModal = document.getElementById("mahasiswaModal");
+        const deleteModal = document.getElementById("deleteModal");
+        const mahasiswaForm = document.getElementById("mahasiswaForm");
+        const addMahasiswaBtn = document.getElementById("addMahasiswaBtn");
+        const cancelBtn = document.getElementById("cancelBtn");
+        const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+        const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+        const modalTitle = document.getElementById("modalTitle");
+        const deleteMahasiswaName = document.getElementById(
+          "deleteMahasiswaName"
+        );
+        const navItems = document.querySelectorAll(".nav-item");
+        const searchInput = document.getElementById("searchInput");
+
+        // Mahasiswa data array - now will be loaded from localStorage if available
+        let mahasiswas = [];
+
+        // Load data from localStorage or use default data if none exists
+        if (localStorage.getItem("mahasiswas")) {
+          mahasiswas = JSON.parse(localStorage.getItem("mahasiswas"));
+        } else {
+          // Default data if no stored data exists
+          mahasiswas = [
+            {
+              nim: "012345678",
+              nama: "John Anderson",
+              tahunMasuk: "2022",
+              kelas: "B",
+              programStudi: "Teknik Informatika",
+            },
+            {
+              nim: "098765432",
+              nama: "John Doe",
+              tahunMasuk: "2022",
+              kelas: "A",
+              programStudi: "Teknik Informatika",
+            },
+          ];
+          // Save default data to localStorage
+          saveDataToLocalStorage();
+        }
+
+        // Initialize the application
+        initApp();
+
+        // Event Listeners
+        addMahasiswaBtn.addEventListener("click", () =>
+          showAddMahasiswaModal()
+        );
+        cancelBtn.addEventListener("click", () => closeModal(mahasiswaModal));
+        cancelDeleteBtn.addEventListener("click", () =>
+          closeModal(deleteModal)
+        );
+        mahasiswaForm.addEventListener("submit", handleMahasiswaFormSubmit);
+        confirmDeleteBtn.addEventListener("click", handleMahasiswaDelete);
+        searchInput.addEventListener("input", handleSearch);
+
+        // Handle active navigation
+        navItems.forEach((item) => {
+          if (window.location.href.includes(item.getAttribute("href"))) {
+            navItems.forEach((nav) => nav.classList.remove("active"));
+            item.classList.add("active");
+          }
+
+          item.addEventListener("click", function () {
+            navItems.forEach((nav) => nav.classList.remove("active"));
+            this.classList.add("active");
+          });
+        });
+
+        // Functions
+        function initApp() {
+          renderMahasiswaTable(mahasiswas);
+        }
+
+        function renderMahasiswaTable(dataToRender) {
+          mahasiswaTableBody.innerHTML = "";
+          if (dataToRender.length === 0) {
+            mahasiswaTableBody.innerHTML =
+              '<tr><td colspan="6" style="text-align: center;">Tidak ada data. Silakan tambah mahasiswa baru.</td></tr>';
+            return;
+          }
+
+          dataToRender.forEach((mahasiswa, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${mahasiswa.nim}</td>
+                <td>${mahasiswa.nama}</td>
+                <td>${mahasiswa.tahunMasuk}</td>
+                <td>${mahasiswa.kelas}</td>
+                <td>${mahasiswa.programStudi}</td>
+                <td>
+                    <div class="action-icons">
+                        <span class="action-icon edit-icon" onclick="editMahasiswa(${index})">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                        </span>
+                        <span class="action-icon delete-icon" onclick="showDeleteModal(${index})">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                            </svg>
+                        </span>
+                    </div>
+                </td>
+            `;
+            mahasiswaTableBody.appendChild(row);
+          });
+        }
+
+        function saveDataToLocalStorage() {
+          localStorage.setItem("mahasiswas", JSON.stringify(mahasiswas));
+        }
+
+        function showAddMahasiswaModal() {
+          modalTitle.textContent = "Tambah Mahasiswa";
+          mahasiswaForm.reset();
+          document.getElementById("mahasiswaId").value = "";
+          openModal(mahasiswaModal);
+        }
+
+        // Search functionality
+        function handleSearch() {
+          const searchTerm = searchInput.value.toLowerCase();
+
+          if (searchTerm === "") {
+            renderMahasiswaTable(mahasiswas);
+          } else {
+            const filteredMahasiswas = mahasiswas.filter(
+              (mahasiswa) =>
+                mahasiswa.nim.toLowerCase().includes(searchTerm) ||
+                mahasiswa.nama.toLowerCase().includes(searchTerm) ||
+                mahasiswa.tahunMasuk.toLowerCase().includes(searchTerm) ||
+                mahasiswa.kelas.toLowerCase().includes(searchTerm) ||
+                mahasiswa.programStudi.toLowerCase().includes(searchTerm)
+            );
+            renderMahasiswaTable(filteredMahasiswas);
+          }
+        }
+
+        // Make these functions globally accessible for onclick events in HTML
+        window.editMahasiswa = function (index) {
+          const mahasiswa = mahasiswas[index];
+          modalTitle.textContent = "Edit Mahasiswa";
+          document.getElementById("mahasiswaId").value = index;
+          document.getElementById("nim").value = mahasiswa.nim;
+          document.getElementById("namaMahasiswa").value = mahasiswa.nama;
+          document.getElementById("tahunMasuk").value = mahasiswa.tahunMasuk;
+          document.getElementById("kelas").value = mahasiswa.kelas;
+          document.getElementById("programStudi").value =
+            mahasiswa.programStudi;
+          openModal(mahasiswaModal);
+        };
+
+        window.showDeleteModal = function (index) {
+          const mahasiswa = mahasiswas[index];
+          document.getElementById("deleteMahasiswaName").textContent =
+            mahasiswa.nama;
+          document.getElementById("mahasiswaId").value = index;
+          openModal(deleteModal);
+        };
+
+        function handleMahasiswaFormSubmit(e) {
+          e.preventDefault();
+          const mahasiswaId = document.getElementById("mahasiswaId").value;
+          const mahasiswa = {
+            nim: document.getElementById("nim").value,
+            nama: document.getElementById("namaMahasiswa").value,
+            tahunMasuk: document.getElementById("tahunMasuk").value,
+            kelas: document.getElementById("kelas").value,
+            programStudi: document.getElementById("programStudi").value,
+          };
+
+          if (mahasiswaId === "") {
+            // Add new mahasiswa
+            mahasiswas.push(mahasiswa);
+          } else {
+            // Update existing mahasiswa
+            mahasiswas[parseInt(mahasiswaId)] = mahasiswa;
+          }
+
+          saveDataToLocalStorage(); // Save to localStorage after any changes
+          renderMahasiswaTable(mahasiswas);
+          closeModal(mahasiswaModal);
+        }
+
+        function handleMahasiswaDelete() {
+          const mahasiswaId = document.getElementById("mahasiswaId").value;
+          mahasiswas.splice(parseInt(mahasiswaId), 1);
+          saveDataToLocalStorage(); // Save to localStorage after deletion
+          renderMahasiswaTable(mahasiswas);
+          closeModal(deleteModal);
+        }
+
+        function openModal(modal) {
+          modal.style.display = "flex";
+        }
+
+        function closeModal(modal) {
+          modal.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
