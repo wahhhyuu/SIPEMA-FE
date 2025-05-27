@@ -84,7 +84,17 @@
         color: #333;
       }
 
+      .nav-item:hover {
+        background-color: #e8e8e8;
+        color: #666;
+      }
+
       .nav-item.active {
+        background-color: #1a3b6d;
+        color: white;
+      }
+
+      .nav-item.active:hover {
         background-color: #1a3b6d;
         color: white;
       }
@@ -171,14 +181,7 @@
         font-weight: bold;
       }
 
-      .action-icons {
-        display: flex;
-        gap: 10px;
-      }
-
-      .action-icon {
-        cursor: pointer;
-      }
+      
 
       /* Modal Styles */
       .modal {
@@ -253,13 +256,15 @@
         text-align: center;
       }
 
-      .alert-icon {
-        margin-bottom: 15px;
-      }
-
-      .alert-icon svg {
+      .document-icon {
         width: 40px;
         height: 40px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 10px;
       }
 
       .alert-message {
@@ -296,6 +301,13 @@
       .notification.show {
         transform: translateY(0);
       }
+      .circle-icon img {
+        width: 24px;
+        height: 24px;
+      }
+      .logout-link {
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
@@ -320,26 +332,15 @@
           </svg>
         </div>
         <span>Admin</span>
-        <div class="document-icon">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#1a3b6d"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path
-              d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-            ></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
+        <div>/</div>
+        <a href="../Login/login.html" class="logout-link">
+          <div class="circle-icon">
+            <img
+              src="https://img.icons8.com/ios-filled/50/000000/logout-rounded.png"
+              alt="Logout"
+            />
+          </div>
+        </a>
         </div>
       </div>
     </div>
@@ -348,7 +349,7 @@
       <a href="user.html" class="nav-item active">Users</a>
       <a href="matakuliah.html" class="nav-item">Mata Kuliah</a>
       <a href="kelas.html" class="nav-item">Kelas</a>
-      <a href="mahasiswa.html" class="nav-item">Mahasiswa Ubah</a>
+      <a href="mahasiswa.html" class="nav-item">Mahasiswa</a>
       <a href="dosen.html" class="nav-item">Dosen</a>
       <a href="nilai.html" class="nav-item">Nilai</a>
     </div>
@@ -588,8 +589,18 @@
           userTableBody.innerHTML = "";
           if (usersToRender.length === 0) {
             // Table is empty
-            userTableBody.innerHTML =
-              '<tr><td colspan="6" style="text-align: center;">Tidak ada data. Silakan tambah user baru.</td></tr>';
+            userTableBody.innerHTML = `
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 60px 20px; color: #888;">
+                  <div style="font-size: 18px; font-style: italic; margin-bottom: 10px; color: #999;">
+                    Tidak ada data user
+                  </div>
+                  <div style="font-size: 14px; color: #aaa; font-style: italic;">
+                    Klik tombol "Add New User" untuk menambahkan data baru
+                  </div>
+                </td>
+              </tr>
+            `;
             return;
           }
 
