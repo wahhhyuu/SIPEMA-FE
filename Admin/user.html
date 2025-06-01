@@ -284,24 +284,7 @@
       }
 
       /* Notification */
-      .notification {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        background-color: #4caf50;
-        color: white;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transform: translateY(-100px);
-        transition: transform 0.3s ease;
-        z-index: 1100;
-      }
-
-      .notification.show {
-        transform: translateY(0);
-      }
-      .circle-icon img {
+           .circle-icon img {
         width: 24px;
         height: 24px;
       }
@@ -517,7 +500,7 @@
     </div>
 
     <!-- Notification -->
-    <div class="notification" id="notification">Data berhasil disimpan!</div>
+    <div class="notification" id="notification"></div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -754,11 +737,11 @@
           if (userId === "") {
             // Add new user
             users.push(user);
-            showNotification("User baru berhasil ditambahkan!");
+            showNotification("");
           } else {
             // Update existing user
             users[parseInt(userId)] = user;
-            showNotification("Data user berhasil diperbarui!");
+            showNotification("");
           }
 
           // Don't save to localStorage
@@ -772,7 +755,7 @@
           // Don't save to localStorage
           renderUserTable(users);
           closeModal(deleteModal);
-          showNotification("User berhasil dihapus!");
+          showNotification("");
         }
 
         function handleResetPasswordSubmit(e) {

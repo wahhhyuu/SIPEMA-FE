@@ -411,7 +411,21 @@
     <!-- Delete Confirmation Modal -->
     <div class="modal" id="deleteModal">
       <div class="modal-content alert-modal">
-        <div class="alert-icon">⚠️</div>
+        <div class="alert-icon">
+          <svg viewBox="0 0 40 40" width="40" height="40">
+            <circle cx="20" cy="20" r="20" fill="#ff6347" />
+            <text
+              x="20"
+              y="28"
+              text-anchor="middle"
+              fill="white"
+              font-size="24"
+              font-weight="bold"
+            >
+              !
+            </text>
+          </svg>
+        </div>
         <div class="alert-message">
           Anda yakin ingin menghapus data dosen "<span
             id="deleteDosenName"
@@ -483,7 +497,7 @@
           dosenTableBody.innerHTML = "";
           if (dataToRender.length === 0) {
             dosenTableBody.innerHTML =
-              '<tr><td colspan="6" class="no-results" style="text-align: center; padding: 40px; color: #666;"><div style="font-size: 16px; margin-bottom: 8px;">Tidak ada data mata kuliah</div><div style="font-size: 14px; color: #999;">Silahkan klik tombol "Tambah Mata Kuliah" untuk menambah data baru</div></td></tr>';
+              '<tr><td colspan="6" class="no-results" style="text-align: center; padding: 40px; color: #666;"><div style="font-size: 16px; margin-bottom: 8px;">Tidak ada data Dosen</div><div style="font-size: 14px; color: #999;">Silahkan klik tombol "Tambah Mata Kuliah" untuk menambah data baru</div></td></tr>';
             return;
           }
 

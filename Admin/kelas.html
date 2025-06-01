@@ -319,37 +319,46 @@
         color: #495057;
       }
 
-      .nav-item:hover {
-        background-color: #e8e8e8;
-        color: #666;
+      .btn-secondary:hover {
+        background-color: #dae0e5;
       }
 
-      .nav-item.active {
-        background-color: #1a3b6d;
+      .btn-primary {
+        background-color: #007bff;
         color: white;
       }
 
-      .nav-item.active:hover {
-        background-color: #1a3b6d;
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+
+      .btn-danger {
+        background-color: #dc3545;
         color: white;
       }
 
-      /* Alert Modal */
+      .btn-danger:hover {
+        background-color: #c82333;
+      }
+
+      .circle-icon img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .logout-link {
+        text-decoration: none;
+      }
+
+      /* Delete Confirmation Modal */
       .alert-modal {
         text-align: center;
       }
 
       .alert-icon {
-        width: 70px;
-        height: 70px;
-        background-color: #ff9800;
-        border-radius: 50%;
+        margin-bottom: 20px;
         display: flex;
-        align-items: center;
         justify-content: center;
-        margin: 0 auto 20px;
-        color: white;
-        font-size: 48px;
       }
 
       .alert-message {
@@ -361,22 +370,6 @@
         display: flex;
         justify-content: center;
         gap: 10px;
-      }
-
-      .btn-danger {
-        background-color: #dc3545;
-        color: white;
-      }
-
-      .btn-danger:hover {
-        background-color: #c82333;
-      }
-      .circle-icon img {
-        width: 24px;
-        height: 24px;
-      }
-      .logout-link {
-        text-decoration: none;
       }
     </style>
   </head>
@@ -435,7 +428,7 @@
               type="text"
               class="search-input"
               id="searchInput"
-              placeholder="Cari mata kuliah..."
+              placeholder="Cari..."
             />
             <div class="search-icon">
               <svg
@@ -516,7 +509,21 @@
     <!-- Delete Confirmation Modal -->
     <div class="modal" id="deleteModal">
       <div class="modal-content alert-modal">
-        <div class="alert-icon">⚠️</div>
+        <div class="alert-icon">
+          <svg viewBox="0 0 40 40" width="40" height="40">
+            <circle cx="20" cy="20" r="20" fill="#ff6347" />
+            <text
+              x="20"
+              y="28"
+              text-anchor="middle"
+              fill="white"
+              font-size="24"
+              font-weight="bold"
+            >
+              !
+            </text>
+          </svg>
+        </div>
         <div class="alert-message">
           Anda yakin ingin menghapus kelas "<span
             id="deleteMataKuliahName"
@@ -599,7 +606,7 @@
             const emptyRow = document.createElement("tr");
             emptyRow.className = "empty-row";
             emptyRow.innerHTML = `
-              <td colspan="5" class="no-results" style="text-align: center; padding: 40px; color: #666;"><div style="font-size: 16px; margin-bottom: 8px;">Tidak ada data mata kuliah</div><div style="font-size: 14px; color: #999;">Silahkan klik tombol "Add New" untuk menambah data baru</div></td>
+              <td colspan="6" class="no-results" style="text-align: center; padding: 40px; color: #666;"><div style="font-size: 16px; margin-bottom: 8px;">Tidak ada data kelas</div><div style="font-size: 14px; color: #999;">Silahkan klik tombol "Add New" untuk menambah data baru</div></td>
             `;
             mataKuliahTableBody.appendChild(emptyRow);
             return;
@@ -611,7 +618,7 @@
                 <td>${mataKuliah.kelas}</td>
                 <td>${mataKuliah.nama}</td>
                 <td>${mataKuliah.tahunAkademik}</td>
-                <td>${mataKuliah.mahsiswa}</td>
+                <td>${mataKuliah.mahasiswa}</td>
                 <td>${mataKuliah.programStudi}</td>
                 <td>
                     <div class="action-icons">
@@ -637,7 +644,7 @@
         }
 
         function showAddMataKuliahModal() {
-          modalTitle.textContent = "Tambah Mata Kuliah";
+          modalTitle.textContent = "Tambah Kelas";
           mataKuliahForm.reset();
           document.getElementById("mataKuliahId").value = "";
           openModal(mataKuliahModal);
@@ -664,12 +671,13 @@
         // Make these functions globally accessible for onclick events in HTML
         window.editMataKuliah = function (index) {
           const mataKuliah = mataKuliahs[index];
-          modalTitle.textContent = "Edit Mata Kuliah";
+          modalTitle.textContent = "Edit Kelas";
           document.getElementById("mataKuliahId").value = index;
           document.getElementById("kelas").value = mataKuliah.kelas;
           document.getElementById("namaMataKuliah").value = mataKuliah.nama;
           document.getElementById("tahunAkademik").value =
             mataKuliah.tahunAkademik;
+          document.getElementById("Mahasiswa").value = mataKuliah.mahasiswa;
           document.getElementById("programStudi").value =
             mataKuliah.programStudi;
           openModal(mataKuliahModal);
@@ -693,6 +701,7 @@
             kelas: document.getElementById("kelas").value,
             nama: document.getElementById("namaMataKuliah").value,
             tahunAkademik: document.getElementById("tahunAkademik").value,
+            mahasiswa: document.getElementById("Mahasiswa").value,
             programStudi: document.getElementById("programStudi").value,
           };
 
@@ -706,9 +715,6 @@
 
           renderMataKuliahTable(mataKuliahs);
           closeModal(mataKuliahModal);
-
-          // Show success message
-          showNotification("Data mata kuliah berhasil disimpan!", "success");
         }
 
         function handleMataKuliahDelete() {
@@ -716,9 +722,6 @@
           mataKuliahs.splice(parseInt(mataKuliahId), 1);
           renderMataKuliahTable(mataKuliahs);
           closeModal(deleteModal);
-
-          // Show success message
-          showNotification("Data mata kuliah berhasil dihapus!", "success");
         }
 
         function openModal(modal) {
@@ -728,61 +731,6 @@
         function closeModal(modal) {
           modal.style.display = "none";
         }
-
-        // Simple notification function
-        function showNotification(message, type) {
-          const notification = document.createElement("div");
-          notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            background-color: ${type === "success" ? "#28a745" : "#dc3545"};
-            color: white;
-            border-radius: 5px;
-            z-index: 9999;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: slideInRight 0.3s ease;
-          `;
-          notification.textContent = message;
-
-          document.body.appendChild(notification);
-
-          setTimeout(() => {
-            notification.style.animation = "slideOutRight 0.3s ease";
-            setTimeout(() => {
-              document.body.removeChild(notification);
-            }, 300);
-          }, 3000);
-        }
-
-        // Add CSS animations for notifications
-        const style = document.createElement("style");
-        style.textContent = `
-          @keyframes slideInRight {
-            from {
-              transform: translateX(100%);
-              opacity: 0;
-            }
-            to {
-              transform: translateX(0);
-              opacity: 1;
-            }
-          }
-          
-          @keyframes slideOutRight {
-            from {
-              transform: translateX(0);
-              opacity: 1;
-            }
-            to {
-              transform: translateX(100%);
-              opacity: 1;
-            }
-          }
-        `;
-        document.head.appendChild(style);
       });
     </script>
   </body>

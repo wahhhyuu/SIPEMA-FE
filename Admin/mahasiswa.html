@@ -308,6 +308,15 @@
         color: #495057;
       }
 
+      .btn-primary {
+        background-color: #1a3b6d;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background-color: #2c5aa0;
+      }
+
       .nav-item:hover {
         background-color: #e8e8e8;
         color: #666;
@@ -462,53 +471,23 @@
           <input type="hidden" id="mahasiswaId" />
           <div class="form-group">
             <label for="nim">NIM</label>
-            <input
-              type="text"
-              class="form-control"
-              id="nim"
-              required
-              placeholder="Masukkan NIM mahasiswa"
-            />
+            <input type="text" class="form-control" id="nim" />
           </div>
           <div class="form-group">
             <label for="namaMahasiswa">Nama Mahasiswa</label>
-            <input
-              type="text"
-              class="form-control"
-              id="namaMahasiswa"
-              required
-              placeholder="Masukkan nama lengkap mahasiswa"
-            />
+            <input type="text" class="form-control" id="namaMahasiswa" s />
           </div>
           <div class="form-group">
             <label for="tahunMasuk">Tahun Masuk</label>
-            <input
-              type="text"
-              class="form-control"
-              id="tahunMasuk"
-              required
-              placeholder="Contoh: 2023"
-            />
+            <input type="text" class="form-control" id="tahunMasuk" s />
           </div>
           <div class="form-group">
             <label for="kelas">Kelas</label>
-            <input
-              type="text"
-              class="form-control"
-              id="kelas"
-              required
-              placeholder="Contoh: A, B, C"
-            />
+            <input type="text" class="form-control" id="kelas" />
           </div>
           <div class="form-group">
             <label for="programStudi">Program Studi</label>
-            <input
-              type="text"
-              class="form-control"
-              id="programStudi"
-              required
-              placeholder="Contoh: Teknik Informatika"
-            />
+            <input type="text" class="form-control" id="programStudi" s />
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" id="cancelBtn">
@@ -523,7 +502,21 @@
     <!-- Delete Confirmation Modal -->
     <div class="modal" id="deleteModal">
       <div class="modal-content alert-modal">
-        <div class="alert-icon">⚠️</div>
+        <div class="alert-icon">
+          <svg viewBox="0 0 40 40" width="40" height="40">
+            <circle cx="20" cy="20" r="20" fill="#ff6347" />
+            <text
+              x="20"
+              y="28"
+              text-anchor="middle"
+              fill="white"
+              font-size="24"
+              font-weight="bold"
+            >
+              !
+            </text>
+          </svg>
+        </div>
         <div class="alert-message">
           Anda yakin ingin menghapus data mahasiswa "<span
             id="deleteMahasiswaName"
@@ -605,7 +598,10 @@
             const emptyRow = document.createElement("tr");
             emptyRow.className = "empty-row";
             emptyRow.innerHTML = `
-              '<tr><td colspan="7" class="no-results" style="text-align: center; padding: 40px; color: #666;"><div style="font-size: 16px; margin-bottom: 8px;">Tidak ada data kelas</div><div style="font-size: 14px; color: #999;">Silahkan klik tombol "Add New" untuk menambah data baru</div></td></tr>';
+              <td colspan="6" style="text-align: center; padding: 40px; color: #666;">
+                <div style="font-size: 16px; margin-bottom: 8px;">Tidak ada data mahasiswa</div>
+                <div style="font-size: 14px; color: #999;">Silahkan klik tombol "Add New" untuk menambah data baru</div>
+              </td>
             `;
             mahasiswaTableBody.appendChild(emptyRow);
             return;
@@ -714,9 +710,6 @@
 
           renderMahasiswaTable(mahasiswas);
           closeModal(mahasiswaModal);
-
-          // Show success message
-          showNotification("Data mahasiswa berhasil disimpan!", "success");
         }
 
         function handleMahasiswaDelete() {
@@ -724,9 +717,6 @@
           mahasiswas.splice(parseInt(mahasiswaId), 1);
           renderMahasiswaTable(mahasiswas);
           closeModal(deleteModal);
-
-          // Show success message
-          showNotification("Data mahasiswa berhasil dihapus!", "success");
         }
 
         function openModal(modal) {
@@ -736,61 +726,6 @@
         function closeModal(modal) {
           modal.style.display = "none";
         }
-
-        // Simple notification function
-        function showNotification(message, type) {
-          const notification = document.createElement("div");
-          notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            background-color: ${type === "success" ? "#28a745" : "#dc3545"};
-            color: white;
-            border-radius: 5px;
-            z-index: 9999;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: slideInRight 0.3s ease;
-          `;
-          notification.textContent = message;
-
-          document.body.appendChild(notification);
-
-          setTimeout(() => {
-            notification.style.animation = "slideOutRight 0.3s ease";
-            setTimeout(() => {
-              document.body.removeChild(notification);
-            }, 300);
-          }, 3000);
-        }
-
-        // Add CSS animations for notifications
-        const style = document.createElement("style");
-        style.textContent = `
-          @keyframes slideInRight {
-            from {
-              transform: translateX(100%);
-              opacity: 0;
-            }
-            to {
-              transform: translateX(0);
-              opacity: 1;
-            }
-          }
-          
-          @keyframes slideOutRight {
-            from {
-              transform: translateX(0);
-              opacity: 1;
-            }
-            to {
-              transform: translateX(100%);
-              opacity: 1;
-            }
-          }
-        `;
-        document.head.appendChild(style);
       });
     </script>
   </body>
