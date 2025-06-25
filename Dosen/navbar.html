@@ -87,6 +87,14 @@
       .menu-button:hover {
         background-color: #e0e0e0;
       }
+      .menu-button.active {
+  background-color: #0f2b52 !important;
+  color: white !important;
+  pointer-events: none;
+}
+ointer-events: none;
+      }
+      
     </style>
   </head>
   <body>
@@ -117,11 +125,26 @@
     </header>
 
     <main class="menu-container">
-      <a href="tahun_presensi.html" class="menu-button">Presensi</a>
-      <a href="tahun_akademik.html" class="menu-button">Nilai Tugas</a>
-      <a href="tahun_akademik.html" class="menu-button">Nilai UTS</a>
-      <a href="tahun_akademik.html" class="menu-button">Nilai UAS</a>
-      <a href="tahun_akademik.html" class="menu-button">Rekap Nilai</a>
+      <a href="presensi.html" class="menu-button ">Presensi</a>
+      <a href="nilai_tugas.html" class="menu-button ">Nilai Tugas</a>
+      <a href="nilai_uts.html" class="menu-button ">Nilai UTS</a>
+      <a href="nilai_uas.html" class="menu-button ">Nilai UAS</a>
+      <a href="rekap_nilai.html" class="menu-button ">Rekap Nilai</a>
     </main>
+    <script>
+      // Ambil nama file dari URL (misal: "nilai_uas.html")
+      const currentPage = window.location.pathname.split("/").pop();
+    
+      // Ambil semua tombol navigasi
+      const menuButtons = document.querySelectorAll(".menu-button");
+    
+      // Cek apakah href tombol sesuai dengan nama file
+      menuButtons.forEach(button => {
+        if (button.getAttribute("href") === currentPage) {
+          button.classList.add("active");
+        }
+      });
+    </script>
+    
   </body>
 </html>

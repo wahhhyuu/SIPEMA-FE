@@ -150,6 +150,9 @@
         text-decoration: none;
         color: black;
       }
+      .table-light tr {
+  background-color: #f1f3f5 !important;
+}
 
       .menu-button.active {
         background-color: #0f2b52 !important;
@@ -175,6 +178,13 @@
       .table tbody tr {
         background-color: white; /* Baris data presensi berwarna putih */
       }
+      .menu-button:hover {
+  background-color: #dee2e6;
+  color: #000000;
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+
     </style>
   </head>
   <body>
@@ -235,7 +245,7 @@
       <main class="menu-container">
         <a href="Presensi.html" class="menu-button">Presensi</a>
         <a href="nilai.html" class="menu-button">Nilai</a>
-        <a href="rekap_akademik" class="menu-button">Rekap Akademik</a>
+        <a href="rekap_akademik.html" class="menu-button">Rekap Akademik</a>
       </main>
     </div>
   </body>
@@ -260,6 +270,30 @@
     </div>
   </div>
 </div>
+<div class="content-container" id="tabelPresensi" style="display: none">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead class="bg-secondary text-white">
+        <tr>
+          <th>Mata Kuliah</th>
+          <th>Tugas</th>
+          <th>UTS</th>
+          <th>UAS</th>
+          <th>Nilai Akhir</th>
+        </tr>
+      </thead>
+      <tbody id="isiTabelPresensi" class="table-light">
+        <tr>
+          <td colspan="5" class="text-center text-muted">
+            Tidak ada data nilai untuk tahun akademik ini.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
 <script>
   function tampilkanDataPresensi() {
     const tahun = document.getElementById("tahunAkademik").value;

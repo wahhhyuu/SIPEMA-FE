@@ -9,8 +9,10 @@
       rel="stylesheet"
     />
     <style>
-      body {
-        background-color: #f5f5f5;
+      .menu-button.active {
+        background-color: #0f2b52 !important;
+        color: white !important;
+        pointer-events: none;
       }
       .navbar {
         background-color: #0f2b52;
@@ -21,43 +23,100 @@
         font-size: 28px;
         font-weight: bold;
       }
+      .nav-btns .btn {
+        border-radius: 10px;
+        margin: 5px;
+        font-weight: 600;
+      }
+      .nav-btns .btn.active {
+        background-color: #0f2b52;
+        color: white;
+      }
       .dropdown-section {
         background-color: white;
         border-radius: 12px;
         padding: 25px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        max-width: 1000px;
+        max-width: 1300px;
         margin: 40px auto;
+      }
+      .menu-button {
+        border: none;
+        padding: 12px 24px;
+        border-radius: 10px;
+        margin-right: 8px;
+        background-color: #f8f9fa;
+        color: #0f2b52;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .menu-button.active {
+        background-color: #0f2b52;
+        color: white;
       }
       .search-box {
         border: 1px solid #0f2b52;
         border-radius: 8px;
         padding: 6px 12px;
-        display: flex;
-        align-items: center;
       }
-      .form-select,
-      .form-control {
+      .form-select {
         border: 1px solid #0f2b52;
         border-radius: 8px;
       }
-      .input-group-text {
-        background: transparent;
-        border: none;
+      .section-container {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 40px;
       }
+      .menu-button:hover {
+        background-color: #e0e0e0;
+      }
+      .menu-button:hover,
+.menu-button:focus {
+  background-color: #0f2b52;
+  color: white;
+}
+
+#step-detail .form-label,
+#step-detail .form-select,
+#step-detail .search-box {
+  width: 100%;
+}
+
+#step-detail .form-select,
+#step-detail input[type="text"] {
+  border-color: #0f2b52;
+  border-radius: 8px;
+}
+
     </style>
   </head>
   <body>
-    <!-- Navbar -->
     <div id="navbar-container"></div>
 
-    <!-- Form Filter -->
-    <div class="dropdown-section">
-      <div class="container">
-        <div class="row g-4">
+    <div class="container-fluid section-container">
+      <!-- STEP 1: Pilih Tahun Akademik -->
+      <div id="step-tahun">
+        <div class="mb-4">
+          <label class="form-label fw-bold">Tahun Akademik</label>
+          <select class="form-select w-100" id="tahunSelect">
+            <option selected disabled>Pilih Tahun Akademik</option>
+            <option value="2024/2025">TA 2024/2025 Genap</option>
+            <option value="2025/2026">TA 2025/2026 Ganjil</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- STEP 2: Pilih Data Presensi (Setelah Tahun Dipilih) -->
+      <div id="step-detail" class="mt-4" style="display: none;">
+        <div class="row g-3 w-100">
           <div class="col-md-4">
             <label class="form-label">Mata Kuliah</label>
-            <select class="form-select">
+            <select class="form-select w-100">
               <option selected disabled>Pilih Mata Kuliah</option>
               <option>Layanan Web</option>
               <option>Sistem Operasi</option>
@@ -65,22 +124,21 @@
           </div>
           <div class="col-md-4">
             <label class="form-label">Kelas</label>
-            <select class="form-select">
+            <select class="form-select w-100">
               <option selected disabled>Pilih Kelas</option>
               <option>A</option>
               <option>B</option>
-              <option>C</option>
             </select>
           </div>
           <div class="col-md-4">
             <label class="form-label">Cari</label>
-            <div class="input-group search-box">
+            <div class="input-group search-box w-100">
               <input
                 type="text"
                 class="form-control border-0"
                 placeholder="Cari berdasarkan NIM atau Nama"
               />
-              <span class="input-group-text">
+              <span class="input-group-text bg-transparent border-0">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -98,15 +156,19 @@
           </div>
         </div>
       </div>
-    </div>
+      
 
-    <!-- Script untuk memuat navbar -->
     <script>
       fetch("navbar.html")
         .then((response) => response.text())
         .then((data) => {
           document.getElementById("navbar-container").innerHTML = data;
         });
+
+      document.getElementById("tahunSelect").addEventListener("change", () => {
+        document.getElementById("step-tahun").style.display = "none";
+        document.getElementById("step-detail").style.display = "block";
+      });
     </script>
   </body>
 </html>

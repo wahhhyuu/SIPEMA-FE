@@ -75,6 +75,24 @@
       .menu-button:hover {
         background-color: #e0e0e0;
       }
+      .menu-button:hover,
+.menu-button:focus {
+  background-color: #0f2b52;
+  color: white;
+}
+
+#step-detail .form-label,
+#step-detail .form-select,
+#step-detail .search-box {
+  width: 100%;
+}
+
+#step-detail .form-select,
+#step-detail input[type="text"] {
+  border-color: #0f2b52;
+  border-radius: 8px;
+}
+
     </style>
   </head>
   <body>
@@ -94,9 +112,9 @@
       </div>
 
       <!-- STEP 2: Pilih Data Presensi (Setelah Tahun Dipilih) -->
-      <div id="step-detail" style="display: none">
-        <div class="row g-3">
-          <div class="col-md-3">
+      <div id="step-detail" class="mt-4" style="display: none;">
+        <div class="row g-3 w-100">
+          <div class="col-md-4">
             <label class="form-label">Mata Kuliah</label>
             <select class="form-select w-100">
               <option selected disabled>Pilih Mata Kuliah</option>
@@ -104,7 +122,7 @@
               <option>Sistem Operasi</option>
             </select>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
             <label class="form-label">Kelas</label>
             <select class="form-select w-100">
               <option selected disabled>Pilih Kelas</option>
@@ -112,16 +130,7 @@
               <option>B</option>
             </select>
           </div>
-          <div class="col-md-3">
-            <label class="form-label">Pertemuan</label>
-            <select class="form-select w-100">
-              <option selected disabled>Pilih Pertemuan</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-            </select>
-          </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
             <label class="form-label">Cari</label>
             <div class="input-group search-box w-100">
               <input
@@ -147,7 +156,7 @@
           </div>
         </div>
       </div>
-    </div>
+      
 
     <script>
       fetch("navbar.html")
